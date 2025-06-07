@@ -1,5 +1,9 @@
 package model.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +122,25 @@ public class MySQLUserDAO implements UserDAO {
 		u.setName(db.getString("nome"));
 		u.setGender(db.getString("sexo"));
 		u.setEmail(db.getString("email"));
+		
+		return u;
+	}
+
+	@Override
+	public User findByEmail(String email) throws ModelException {
+DBHandler db = new DBHandler();
+		
+		String sql = "SELECT * FROM users WHERE email = ?";
+		
+		db.prepareStatement(sql);
+		db.setString(1, email);
+		db.executeQuery();
+		
+		User u = null;
+		while (db.next()) {
+			u = createUser(db);
+			break;
+		}
 		
 		return u;
 	}

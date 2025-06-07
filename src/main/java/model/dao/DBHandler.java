@@ -144,9 +144,9 @@ public class DBHandler {
 		}
 	}
 	
-	public Date getDate(String column) throws ModelException {
+	public Date getDate(String data_abertura) throws ModelException {
 		try {
-			return resultSet.getDate(column);
+			return resultSet.getDate(data_abertura);
 		} catch (SQLException e) {
 			close();
 			throw new ModelException("Erro ao chamar getDate", e);
