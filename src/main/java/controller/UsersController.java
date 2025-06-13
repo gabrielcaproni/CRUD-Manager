@@ -12,6 +12,7 @@ import model.ModelException;
 import model.User;
 import model.dao.DAOFactory;
 import model.dao.UserDAO;
+import model.utils.PasswordEncryptor;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
@@ -119,11 +120,15 @@ public class UsersController extends HttpServlet {
 		String userName = req.getParameter("name");
 		String userGender = req.getParameter("gender");
 		String userEMail = req.getParameter("mail");
+		String userSenha = req.getParameter("pass");
 		
 		User user = new User();
 		user.setName(userName);
 		user.setGender(userGender);
 		user.setEmail(userEMail);
+		
+		// <<< MUDANÇA MÍNIMA 1: Criptografar e definir a senha antes de salvar >>>
+		user.setSenha(PasswordEncryptor.hashPassword(userSenha));
 		
 		UserDAO dao = DAOFactory.createDAO(UserDAO.class);
 		
@@ -146,11 +151,17 @@ public class UsersController extends HttpServlet {
 		String userName = req.getParameter("name");
 		String userGender = req.getParameter("gender");
 		String userEMail = req.getParameter("mail");
+		String userSenha = req.getParameter("pass");
 		
 		User user = loadUser(req);
 		user.setName(userName);
 		user.setGender(userGender);
 		user.setEmail(userEMail);
+
+		// <<< MUDANÇA MÍNIMA 2: Criptografar a senha apenas se uma nova foi digitada >>>
+		if (userSenha != null && !userSenha.isEmpty()) {
+			user.setSenha(PasswordEncryptor.hashPassword(userSenha));
+		}
 		
 		UserDAO dao = DAOFactory.createDAO(UserDAO.class);
 		

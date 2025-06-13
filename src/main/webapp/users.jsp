@@ -55,7 +55,7 @@
 								<tr>
 				                    <td>${user.getName()}</td>
 				                    <td>${user.getGender()}</td>
-				                    <td>${user.getEmail()}</td>				                    
+				                    <td>${user.getEmail()}</td>				                    			                    
 				                    <td class="actions">
 				                        <a class="btn btn-info btn-xs" 
 				                           href="${pageContext.request.contextPath}/user/update?userId=${user.getId()}" >

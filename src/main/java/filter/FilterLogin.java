@@ -5,7 +5,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.*;
 
-@WebFilter("/*")
+@WebFilter("/*") // Alterado para cobrir todas as URLs e garantir que o filtro sempre rode
 public class FilterLogin implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
@@ -20,7 +20,8 @@ public class FilterLogin implements Filter {
         boolean isResource = uri.contains("/css/") || uri.contains("/js/") || uri.contains("/images/");
         HttpSession session = request.getSession(false);
 
-        boolean isLoggedIn = (session != null && session.getAttribute("usuarioLogado") != null);
+        // >>> CORREÇÃO 1: Alterado "usuarioLogado" para "usuario_logado" para corresponder ao LoginController <<<
+        boolean isLoggedIn = (session != null && session.getAttribute("usuario_logado") != null);
 
         if (isLoggedIn || isLoginPage || isResource) {
             chain.doFilter(req, res);

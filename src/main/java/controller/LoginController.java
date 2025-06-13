@@ -12,7 +12,7 @@ import model.ModelException;
 import model.User;
 import model.dao.DAOFactory;
 import model.dao.UserDAO;
-
+import model.utils.PasswordEncryptor;
 
 @WebServlet(urlPatterns = {"/login", "/logout"})
 public class LoginController extends HttpServlet{
@@ -34,6 +34,12 @@ public class LoginController extends HttpServlet{
 		} catch (ModelException e) {
 			e.printStackTrace();
 		}
+
+		if (user != null && PasswordEncryptor.checkPassword(userPW, user.getSenha())) {
+
+			req.getSession().setAttribute("usuario_logado", user);
+			resp.sendRedirect("/crud-manager/");
+		} else resp.sendRedirect("/crud-manager/login.jsp?erro=true");
 	}
 
 	
@@ -48,6 +54,6 @@ public class LoginController extends HttpServlet{
 		if (session != null)
 			session.invalidate();
 		
-		resp.sendRedirect("/CRUD-Manager/login.jsp");
+		resp.sendRedirect("/crud-manager/login.jsp");
 	}
 }

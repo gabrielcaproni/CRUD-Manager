@@ -19,12 +19,13 @@ public class MySQLUserDAO implements UserDAO {
 		DBHandler db = new DBHandler();
 		
 		String sqlInsert = "INSERT INTO users VALUES "
-				+ " (DEFAULT, ?, ?, ?);";
+				+ " (DEFAULT, ?, ?, ?, ?);";
 		
 		db.prepareStatement(sqlInsert);
 		db.setString(1, user.getName());
 		db.setString(2, user.getGender());
 		db.setString(3, user.getEmail());
+		db.setString(4, user.getSenha());
 		  
 		return db.executeUpdate() > 0;
 	}
@@ -37,7 +38,8 @@ public class MySQLUserDAO implements UserDAO {
 		String sqlUpdate = "UPDATE users "
 				         	+ "SET nome = ?, "
 				         	+ "sexo = ?, "
-				         	+ "email = ? "
+				         	+ "email = ?, "
+				         	+ "senha = ?"
 				         + "WHERE id = ?";
 		
 		
@@ -46,7 +48,8 @@ public class MySQLUserDAO implements UserDAO {
 		db.setString(1, user.getName());
 		db.setString(2, user.getGender());
 		db.setString(3, user.getEmail());
-		db.setInt(4, user.getId());
+		db.setString(4, user.getSenha());
+		db.setInt(5, user.getId());
 		
 		return db.executeUpdate() > 0;
 	}
@@ -122,6 +125,7 @@ public class MySQLUserDAO implements UserDAO {
 		u.setName(db.getString("nome"));
 		u.setGender(db.getString("sexo"));
 		u.setEmail(db.getString("email"));
+		u.setSenha(db.getString("senha"));
 		
 		return u;
 	}

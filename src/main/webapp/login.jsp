@@ -32,11 +32,11 @@
         <form action="login" method="post">
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="text" class="form-control" id="email" name="email" placeholder="Digite seu e-mail" required>
+                <input type="text" class="form-control" id="email" name="user_login" placeholder="Digite seu e-mail" required>
             </div>
             <div class="mb-3">
                 <label for="senha" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required>
+                <input type="password" class="form-control" id="senha" name="user_pw" placeholder="Digite sua senha" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Entrar</button>
 
